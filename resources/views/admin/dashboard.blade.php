@@ -27,7 +27,7 @@
             <a href="{{ route('kategori.index') }}" class="small-box-footer">View <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <!-- ./col --><!-- visit "codeastro" for more projects! -->
+    <!-- ./col -->   <!-- visit "codeastro" for more projects! -->
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-purple">
