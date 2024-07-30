@@ -82,7 +82,7 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-{{--                <h3>{{ $penjualan }}</h3>--}}
+                {{--  <h3>{{ $penjualan }}</h3>  --}}
                 <h3>{{ $sell }}</h3>
 
                 <p>Sales</p>
@@ -171,7 +171,8 @@ $(function() {
     var salesChart = new Chart(salesChartCanvas);
 
     var salesChartData = {
-        labels: {{ json_encode($data_tanggal) }},
+        {{--  labels: {{ json_encode($data_tanggal) }},  --}}
+        labels: {{ json_encode($date_data) }},
         datasets: [
             {
                 label: 'Pendapatan',
@@ -181,7 +182,8 @@ $(function() {
                 pointStrokeColor    : 'rgba(60,141,188,1)',
                 pointHighlightFill  : '#fff',
                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: {{ json_encode($data_pendapatan) }}
+                {{--  data: {{ json_encode($data_pendapatan) }}  --}}
+                data: {{ json_encode($income_data) }}
             }
         ]
     };

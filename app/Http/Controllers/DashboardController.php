@@ -66,7 +66,7 @@ class DashboardController extends Controller
         $start_date = date('Y-m-01');
 
         if (auth()->user()->level == 1) {
-            return view('admin.dashboard', compact('category', 'product', 'supplier', 'member', 'purchase', 'expense', 'start_date', 'end_date', 'date_data', 'income_data'));
+            return view('admin.dashboard', compact('category', 'product', 'supplier', 'member', 'purchase', 'expense', 'start_date', 'end_date', 'date_data', 'income_data' , 'sell'));
 //            return view('admin.dashboard', compact('kategori', 'produk', 'supplier', 'member', 'penjualan', 'pengeluaran', 'pembelian', 'tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
         } else {
             return view('kasir.dashboard');

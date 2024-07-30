@@ -14,16 +14,16 @@ class SettingTableSeeder extends Seeder
      */
     public function run()
     {
-//        DB::table('setting')->insert([
-//            'id_setting' => 1,
-//            'nama_perusahaan' => 'Toko Ku',
-//            'alamat' => 'Jl. Kibandang Samaran Ds. Slangit',
-//            'telepon' => '081234779987',
-//            'tipe_nota' => 1, // kecil
-//            'diskon' => 5,
-//            'path_logo' => '/img/logo.png',
-//            'path_kartu_member' => '/img/member.png',
-//        ]);
+       DB::table('setting')->insert([
+           'id_setting' => 1,
+           'nama_perusahaan' => 'Toko Ku',
+           'alamat' => 'Jl. Kibandang Samaran Ds. Slangit',
+           'telepon' => '081234779987',
+           'tipe_nota' => 1, // kecil
+           'diskon' => 5,
+           'path_logo' => '/img/logo.png',
+           'path_kartu_member' => '/img/member.png',
+       ]);
         DB::table('settings')->insert([
             'id' => 1,
             'shop_name' => 'jewelry',
