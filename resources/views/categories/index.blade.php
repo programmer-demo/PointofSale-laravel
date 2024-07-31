@@ -18,6 +18,7 @@
                 <button onclick="addForm('{{ route('category.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i> Add New Category</button>
             </div>
             <div class="box-body table-responsive">
+{{--                <table class="table table-stiped table-bordered table-hover">--}}
                 <table class="table table-stiped table-bordered table-hover">
                     <thead>
                         <th width="5%">#</th>

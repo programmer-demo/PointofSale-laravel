@@ -53,12 +53,19 @@ class DashboardController extends Controller
         while (strtotime($start_date) <= strtotime($end_date)) {
             $date_data[] = (int) substr($start_date, 8, 2);
 
-            $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$start_date%")->sum('bayar');
-            $total_pembelian = Pembelian::where('created_at', 'LIKE', "%$start_date%")->sum('bayar');
-            $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "%$start_date%")->sum('nominal');
+//            $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$start_date%")->sum('bayar');
+            $total_sales = Sell::where('created_at', 'LIKE', "%$start_date%")->sum('accepted');
 
-            $pendapatan = $total_penjualan - $total_pembelian - $total_pengeluaran;
-            $income_data[] += $pendapatan;
+//            $total_pembelian = Pembelian::where('created_at', 'LIKE', "%$start_date%")->sum('bayar');
+            $total_purchases = Purchase::where('created_at', 'LIKE', "%$start_date%")->sum('total_price');
+
+//            $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "%$start_date%")->sum('nominal');
+            $total_expenses = Expense::where('created_at', 'LIKE', "%$start_date%")->sum('amount');
+
+//            $pendapatan = $total_penjualan - $total_pembelian - $total_pengeluaran;
+            $income = $total_sales - $total_purchases - $total_expenses;
+//            $income_data[] += $pendapatan;
+            $income_data[] += $income;
 
             $start_date = date('Y-m-d', strtotime("+1 day", strtotime($start_date)));
         }
