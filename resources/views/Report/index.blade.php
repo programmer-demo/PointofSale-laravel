@@ -21,7 +21,7 @@ Income Report {{ tanggal_indonesia($start_date, false) }} -- {{ tanggal_indonesi
             <div class="box-header with-border">
                 <button onclick="updatePeriode()" class="btn btn-primary btn-flat"><i class="fa fa-plus-circle"></i> Change Date</button>
 {{--                <!-- <a href="{{ route('laporan.export_pdf', [$tanggalAwal, $tanggalAkhir]) }}" target="_blank" class="btn btn-success btn-flat"><i class="fa fa-file-excel-o"></i> Export PDF</a> -->--}}
-                 <a href="{{ route('report.export_pdf', [$start_date, $end_date]) }}" target="_blank" class="btn btn-success btn-flat"><i class="fa fa-file-excel-o"></i> Export PDF</a>
+                 <a href="{{ route('laporan.export_pdf', [$start_date, $end_date]) }}" target="_blank" class="btn btn-success btn-flat"><i class="fa fa-file-excel-o"></i> Export PDF</a>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-stiped table-bordered table-hover">
@@ -39,7 +39,7 @@ Income Report {{ tanggal_indonesia($start_date, false) }} -- {{ tanggal_indonesi
     </div>
 </div>
 <!-- visit "codeastro" for more projects! -->
-@includeIf('report.form')
+@includeIf('laporan.form')
 @endsection
 
 @push('scripts')
@@ -55,20 +55,15 @@ Income Report {{ tanggal_indonesia($start_date, false) }} -- {{ tanggal_indonesi
             autoWidth: false,
             ajax: {
                 {{--url: '{{ route('laporan.data', [$tanggalAwal, $tanggalAkhir]) }}',--}}
-                url: '{{ route('report.data', [$start_date, $end_date]) }}',
+                url: '{{ route('laporan.data', [$start_date, $end_date]) }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
-                // {data: 'tanggal'},
-                {data: 'date'},
-                // {data: 'penjualan'},
-                {data: 'sale'},
-                // {data: 'pembelian'},
-                {data: 'purchase'},
-                // {data: 'pengeluaran'},
-                {data: 'production'},
-                // {data: 'pendapatan'}
-                {data: 'income'}
+                {data: 'tanggal'},
+                {data: 'penjualan'},
+                {data: 'pembelian'},
+                {data: 'pengeluaran'},
+                {data: 'pendapatan'}
             ],
             dom: 'Brt',
             bSort: false,

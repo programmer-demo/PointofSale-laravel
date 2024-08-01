@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Expense;
 use App\Models\Purchase;
 use App\Models\Sell;
+//use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -78,25 +80,44 @@ class ReportController extends Controller
 //            $row['pengeluaran'] = format_uang($total_pengeluaran);
 //            $row['pendapatan'] = format_uang($pendapatan);
 
-            $row['tanggal'] = tanggal_indonesia($date, false);
-            $row['penjualan'] = format_uang($total_sales);
-            $row['pembelian'] = format_uang($total_purchases);
-            $row['pengeluaran'] = format_uang($total_expenses);
-            $row['pendapatan'] = format_uang($pendapatan);
+            $row['date'] = tanggal_indonesia($date, false);
+            $row['sale'] = format_uang($total_sales);
+            $row['purchase'] = format_uang($total_purchases);
+            $row['production'] = format_uang($total_expenses);
+            $row['income'] = format_uang($income);
 
             $data[] = $row;
         }
         // visit "codeastro" for more projects!
         $data[] = [
             'DT_RowIndex' => '',
-            'tanggal' => '',
-            'penjualan' => '',
-            'pembelian' => '',
-            'pengeluaran' => 'Total Income',
-            'pendapatan' => format_uang($total_pendapatan),
+            'date' => '',
+            'sale' => '',
+            'purchase' => '',
+            'production' => 'Total Income',
+            'income' => format_uang($total_income),
         ];
 
         return $data;
+    }
+
+    public function data($start, $end)
+    {
+        $data = $this->getData($start, $end);
+
+        return datatables()
+            ->of($data)
+            ->make(true);
+    }
+
+    public function exportPDF($start, $end)
+    {
+        $data = $this->getData($start, $end);
+        $pdf  = PDF::loadView('Report.pdf', compact('start', 'end', 'data'));
+        $pdf->setPaper('a4', 'potrait');
+
+//        return $pdf->stream('Laporan-pendapatan-'. date('Y-m-d-his') .'.pdf');
+        return $pdf->stream('Income-Report-'. date('Y-m-d-his') .'.pdf');
     }
 
     /**
