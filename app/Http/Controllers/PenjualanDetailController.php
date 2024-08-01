@@ -14,7 +14,8 @@ class PenjualanDetailController extends Controller
     public function index()
     {
         $produk = Produk::orderBy('nama_produk')->get();
-        $member = Member::orderBy('nama')->get();
+//        $member = Member::orderBy('nama')->get();
+        $member = Member::orderBy('name')->get();
         $diskon = Setting::first()->diskon ?? 0;
 
         // Check whether there are any transactions in progress

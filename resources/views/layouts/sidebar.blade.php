@@ -52,7 +52,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('pembelian.index') }}">
+                <a href="{{ route('purchase.index') }}">
                     <i class="fa fa-download"></i> <span>Purchase</span>
                 </a>
             </li>

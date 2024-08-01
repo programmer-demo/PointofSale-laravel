@@ -11,6 +11,8 @@ use App\Http\Controllers\{CategoryController,
     PembelianDetailController,
     PenjualanController,
     PenjualanDetailController,
+    PurchaseController,
+    PurchaseDetailController,
     ReportController,
     SettingController,
     SupplierController,
@@ -56,14 +58,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/pengeluaran/data', [PengeluaranController::class, 'data'])->name('pengeluaran.data');
         Route::resource('/pengeluaran', PengeluaranController::class);
 
-        Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
-        Route::get('/pembelian/{id}/create', [PembelianController::class, 'create'])->name('pembelian.create');
-        Route::resource('/pembelian', PembelianController::class)
-            ->except('create');
+//        Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
+        Route::get('/purchase/data', [PurchaseController::class, 'data'])->name('purchase.data');
 
-        Route::get('/pembelian_detail/{id}/data', [PembelianDetailController::class, 'data'])->name('pembelian_detail.data');
-        Route::get('/pembelian_detail/loadform/{diskon}/{total}', [PembelianDetailController::class, 'loadForm'])->name('pembelian_detail.load_form');
-        Route::resource('/pembelian_detail', PembelianDetailController::class)
+//        Route::get('/pembelian/{id}/create', [PembelianController::class, 'create'])->name('pembelian.create');
+        Route::get('/purchase/{id}/create', [PurchaseController::class, 'create'])->name('purchase.create');
+
+//        Route::resource('/pembelian', PembelianController::class)->except('create');
+        Route::resource('/purchase', PurchaseController::class)->except('create');
+
+//        Route::get('/pembelian_detail/{id}/data', [PembelianDetailController::class, 'data'])->name('pembelian_detail.data');
+        Route::get('/purchase-detail/{id}/data', [PurchaseDetailController::class, 'data'])->name('purchase_detail.data');
+
+        Route::get('/purchase-detail/load-form/{discount}/{total}', [PurchaseDetailController::class, 'loadForm'])->name('purchase_detail.load_form');
+        Route::resource('/purchase-detail', PurchaseDetailController::class)
             ->except('create', 'show', 'edit');
 
         Route::get('/penjualan/data', [PenjualanController::class, 'data'])->name('penjualan.data');

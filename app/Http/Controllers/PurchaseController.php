@@ -17,7 +17,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $supplier = Supplier::orderBy('name')->get();
+        $supplier = Supplier::orderBy('id')->get();
 
         return view('purchase.index', compact('supplier'));
     }
@@ -50,8 +50,8 @@ class PurchaseController extends Controller
             ->addColumn('action', function ($purchases) {
                 return '
                 <div class="btn-group">
-                    <button onclick="showDetail(`'. route('pembelian.show', $purchases->id) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-eye"></i></button>
-                    <button onclick="deleteData(`'. route('pembelian.destroy', $purchases->id) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                    <button onclick="showDetail(`'. route('purchase.show', $purchases->id) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-eye"></i></button>
+                    <button onclick="deleteData(`'. route('purchase.destroy', $purchases->id) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
             })
@@ -74,7 +74,7 @@ class PurchaseController extends Controller
         $purchases->buyer       = 0;
         $purchases->save();
 
-        session(['id' => $purchases->id]);
+        session(['purchase_id' => $purchases->id]);
         session(['supplier_id' => $purchases->supplier_id]);
 
         return redirect()->route('purchase_detail.index');

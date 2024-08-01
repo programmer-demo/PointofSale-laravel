@@ -44,29 +44,29 @@ Purchase
                 <table>
                     <tr>
                         <td>Supplier</td>
-                        <td>: {{ $supplier->nama }}</td>
+                        <td>: {{ $supplier->name??'' }}</td>
                     </tr>
                     <tr>
                         <td>Telephone</td>
-                        <td>: {{ $supplier->telepon }}</td>
+                        <td>: {{ $supplier->telephone??'' }}</td>
                     </tr>
                     <tr>
                         <td>Address</td>
-                        <td>: {{ $supplier->alamat }}</td>
+                        <td>: {{ $supplier->address??'' }}</td>
                     </tr>
                 </table>
             </div>
             <div class="box-body">
-                    
+
                 <form class="form-produk">
                     @csrf
                     <div class="form-group row">
                         <label for="kode_produk" class="col-lg-2">Product Code</label>
                         <div class="col-lg-5">
                             <div class="input-group">
-                                <input type="hidden" name="id_pembelian" id="id_pembelian" value="{{ $id_pembelian }}">
-                                <input type="hidden" name="id_produk" id="id_produk">
-                                <input type="text" class="form-control" name="kode_produk" id="kode_produk">
+                                <input type="hidden" name="purchase_id" id="purchase_id" value="{{ $purchase_id  }}">
+                                <input type="hidden" name="product_id" id="product_id">
+                                <input type="text" class="form-control" name="code_product" id="code_product">
                                 <span class="input-group-btn">
                                     <button onclick="tampilProduk()" class="btn btn-info btn-flat" type="button"><i class="fa fa-arrow-right"></i></button>
                                 </span>
@@ -93,29 +93,29 @@ Purchase
                         <div class="tampil-terbilang"></div>
                     </div>
                     <div class="col-lg-4">
-                        <form action="{{ route('pembelian.store') }}" class="form-pembelian" method="post">
+                        <form action="{{ route('purchase.store') }}" class="form-pembelian" method="post">
                             @csrf
-                            <input type="hidden" name="id_pembelian" value="{{ $id_pembelian }}">
+                            <input type="hidden" name="purchase_id" value="{{ $purchase_id }}">
                             <input type="hidden" name="total" id="total">
                             <input type="hidden" name="total_item" id="total_item">
-                            <input type="hidden" name="bayar" id="bayar">
+                            <input type="hidden" name="buyer" id="buyer">
 
                             <div class="form-group row">
-                                <label for="totalrp" class="col-lg-2 control-label">Total</label>
+                                <label for="totalRp" class="col-lg-2 control-label">Total</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="totalrp" class="form-control" readonly>
+                                    <input type="text" id="totalRp" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="diskon" class="col-lg-2 control-label">Discount</label>
+                                <label for="discount" class="col-lg-2 control-label">Discount</label>
                                 <div class="col-lg-8">
-                                    <input type="number" name="diskon" id="diskon" class="form-control" value="{{ $diskon }}">
+                                    <input type="number" name="discount" id="discount" class="form-control" value="{{ $discount }}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="bayar" class="col-lg-2 control-label">Pay</label>
+                                <label for="buyer" class="col-lg-2 control-label">Pay</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="bayarrp" class="form-control">
+                                    <input type="text" id="buyerRp" class="form-control">
                                 </div>
                             </div>
                         </form>
@@ -130,7 +130,7 @@ Purchase
     </div>
 </div>
 <!-- visit "codeastro" for more projects! -->
-@includeIf('pembelian_detail.produk')
+@includeIf('purchase_detail.product')
 @endsection
 
 @push('scripts')
@@ -146,7 +146,7 @@ Purchase
             serverSide: true,
             autoWidth: false,
             ajax: {
-                url: '{{ route('pembelian_detail.data', $id_pembelian) }}',
+                url: '{{ route('purchase_detail.data', $purchase_id??0) }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
@@ -181,7 +181,7 @@ Purchase
                 return;
             }
 
-            $.post(`{{ url('/pembelian_detail') }}/${id}`, {
+            $.post(`{{ url('/purchase-detail') }}/${id}`, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'put',
                     'jumlah': jumlah
@@ -226,7 +226,7 @@ Purchase
     }
 
     function tambahProduk() {
-        $.post('{{ route('pembelian_detail.store') }}', $('.form-produk').serialize())
+        $.post('{{ route('purchase-detail.store') }}', $('.form-produk').serialize())
             .done(response => {
                 $('#kode_produk').focus();
                 table.ajax.reload(() => loadForm($('#diskon').val()));
@@ -257,7 +257,7 @@ Purchase
         $('#total').val($('.total').text());
         $('#total_item').val($('.total_item').text());
 
-        $.get(`{{ url('/pembelian_detail/loadform') }}/${diskon}/${$('.total').text()}`)
+        $.get(`{{ url('/purchase-detail/load-form') }}/${diskon}/${$('.total').text()}`)
             .done(response => {
                 $('#totalrp').val('$ '+ response.totalrp);
                 $('#bayarrp').val('$ '+ response.bayarrp);

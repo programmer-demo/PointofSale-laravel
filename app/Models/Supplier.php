@@ -9,9 +9,9 @@ class Supplier extends Model
 {
     use HasFactory;
 
-    protected $table = 'supplier';
-//    protected $table = 'suppliers';
-    protected $primaryKey = 'id_supplier';
-//    protected $primaryKey = 'id';
+//    protected $table = 'supplier';
+    protected $table = 'suppliers';
+//    protected $primaryKey = 'id_supplier';
+    protected $primaryKey = 'id';
     protected $guarded = [];
 }
