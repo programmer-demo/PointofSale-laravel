@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/produk', ProdukController::class);
 
         Route::get('/member/data', [MemberController::class, 'data'])->name('member.data');
-        Route::post('/member/cetak-member', [MemberController::class, 'cetakMember'])->name('member.cetak_member');
+        Route::post('/member/print-member', [MemberController::class, 'print_member'])->name('member.print_member');
         Route::resource('/member', MemberController::class);
 
         Route::get('/supplier/data', [SupplierController::class, 'data'])->name('supplier.data');

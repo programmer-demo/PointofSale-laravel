@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use App\Models\Setting;
+//use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
-use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class MemberController extends Controller
 {
@@ -21,28 +22,29 @@ class MemberController extends Controller
 
     public function data()
     {
-        $member = Member::orderBy('kode_member')->get();
+//        $member = Member::orderBy('kode_member')->get();
+        $member = Member::orderBy('code_member')->get();
 
         return datatables()
             ->of($member)
             ->addIndexColumn()
-            ->addColumn('select_all', function ($produk) {
+            ->addColumn('select_all', function ($member) {
                 return '
-                    <input type="checkbox" name="id_member[]" value="'. $produk->id_member .'">
+                    <input type="checkbox" name="id_member[]" value="'. $member->id .'">
                 ';
             })
-            ->addColumn('kode_member', function ($member) {
-                return '<span class="label label-success">'. $member->kode_member .'<span>';
+            ->addColumn('code_member', function ($member) {
+                return '<span class="label label-success">'. $member->code_member .'<span>';
             })
-            ->addColumn('aksi', function ($member) {
+            ->addColumn('action', function ($member) {
                 return '
                 <div class="btn-group">
-                    <button type="button" onclick="editForm(`'. route('member.update', $member->id_member) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-pencil"></i></button>
-                    <button type="button" onclick="deleteData(`'. route('member.destroy', $member->id_member) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                    <button type="button" onclick="editForm(`'. route('member.update', $member->id) .'`)" class="btn btn-xs btn-primary btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button type="button" onclick="deleteData(`'. route('member.destroy', $member->id) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
             })
-            ->rawColumns(['aksi', 'select_all', 'kode_member'])
+            ->rawColumns(['action', 'select_all', 'code_member'])
             ->make(true);
     }
 
@@ -65,13 +67,13 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         $member = Member::latest()->first() ?? new Member();
-        $kode_member = (int) $member->kode_member +1;
+        $code_member = (int) $member->code_member +1;
 
         $member = new Member();
-        $member->kode_member = tambah_nol_didepan($kode_member, 5);
-        $member->nama = $request->nama;
-        $member->telepon = $request->telepon;
-        $member->alamat = $request->alamat;
+        $member->code_member = tambah_nol_didepan($code_member, 5);
+        $member->name = $request->name;
+        $member->telephone = $request->telephone;
+        $member->address = $request->address;
         $member->save();
 
         return response()->json('Data saved successfully', 200);
@@ -129,19 +131,19 @@ class MemberController extends Controller
         return response(null, 204);
     }
 
-    public function cetakMember(Request $request)
+    public function print_member(Request $request)
     {
-        $datamember = collect(array());
+        $data_member = collect(array());
         foreach ($request->id_member as $id) {
             $member = Member::find($id);
-            $datamember[] = $member;
+            $data_member[] = $member;
         }
 
-        $datamember = $datamember->chunk(2);
+        $data_member = $data_member->chunk(2);
         $setting    = Setting::first();
 
         $no  = 1;
-        $pdf = PDF::loadView('member.cetak', compact('datamember', 'no', 'setting'));
+        $pdf = PDF::loadView('member.print', compact('data_member', 'no', 'setting'));
         $pdf->setPaper(array(0, 0, 566.93, 850.39), 'potrait');
         return $pdf->stream('member.pdf');
     }

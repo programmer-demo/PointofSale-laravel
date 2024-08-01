@@ -33,7 +33,7 @@
             height: 40px;
             right: 16pt;
         }
-        .nama {
+        .name {
             position: absolute;
             top: 100pt;
             right: 16pt;
@@ -42,7 +42,7 @@
             font-weight: bold;
             color: #fff !important;
         }
-        .telepon {
+        .telephone {
             position: absolute;
             margin-top: 120pt;
             right: 16pt;
@@ -68,35 +68,35 @@
     </style>
 </head>
 <body>
-    <section style="border: 1px solid #fff">
-        <table width="100%">
-            @foreach ($datamember as $key => $data)
-                <tr>
-                    @foreach ($data as $item)
-                        <td class="text-center">
-                            <div class="box">
-                                <img src="{{ public_path($setting->path_kartu_member) }}" alt="card" width="50%">
-                                <div class="logo">
-                                    <p>{{ $setting->nama_perusahaan }}</p>
-                                    <img src="{{ public_path($setting->path_logo) }}" alt="logo">
-                                </div>
-                                <div class="nama">{{ $item->nama }}</div>
-                                <div class="telepon">{{ $item->telepon }}</div>
-                                <div class="barcode text-left">
-                                    <img src="data:image/png;base64, {{ DNS2D::getBarcodePNG("$item->kode_member", 'QRCODE') }}" alt="qrcode"
-                                        height="45"
-                                        widht="45">
-                                </div>
+<section style="border: 1px solid #fff">
+    <table width="100%">
+        @foreach ($data_member as $key => $data)
+            <tr>
+                @foreach ($data as $item)
+                    <td class="text-center">
+                        <div class="box">
+                            <img src="{{ public_path($setting->path_kartu_member) }}" alt="card" width="50%">
+                            <div class="logo">
+                                <p>{{ $setting->nama_perusahaan }}</p>
+                                <img src="{{ public_path($setting->path_logo) }}" alt="logo">
                             </div>
-                        </td>
-                        
-                        @if (count($datamember) == 1)
+                            <div class="name">{{ $item->name }}</div>
+                            <div class="telephone">{{ $item->telephone }}</div>
+                            <div class="barcode text-left">
+                                <img src="data:image/png;base64, {{ DNS2D::getBarcodePNG("$item->code_member", 'QRCODE') }}" alt="qrcode"
+                                     height="45"
+                                     width="45">
+                            </div>
+                        </div>
+                    </td>
+
+                    @if (count($data_member) == 1)
                         <td class="text-center" style="width: 50%;"></td>
-                        @endif
-                    @endforeach
-                </tr>
-            @endforeach
-        </table>
-    </section>
+                    @endif
+                @endforeach
+            </tr>
+        @endforeach
+    </table>
+</section>
 </body><!-- visit "codeastro" for more projects! -->
 </html>

@@ -15,7 +15,7 @@ List of Members
         <div class="box">
             <div class="box-header with-border">
                 <button onclick="addForm('{{ route('member.store') }}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i> Add New Member</button>
-                <button onclick="cetakMember('{{ route('member.cetak_member') }}')" class="btn btn-primary btn-flat"><i class="fa fa-id-card"></i> Download Membership Card</button>
+                <button onclick="print_member('{{ route('member.print_member') }}')" class="btn btn-primary btn-flat"><i class="fa fa-id-card"></i> Download Membership Card</button>
             </div>
             <div class="box-body table-responsive">
                 <form action="" method="post" class="form-member">
@@ -58,11 +58,11 @@ List of Members
             columns: [
                 {data: 'select_all', searchable: false, sortable: false},
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
-                {data: 'kode_member'},
-                {data: 'nama'},
-                {data: 'telepon'},
-                {data: 'alamat'},
-                {data: 'aksi', searchable: false, sortable: false},
+                {data: 'code_member'},
+                {data: 'name'},
+                {data: 'telephone'},
+                {data: 'address'},
+                {data: 'action', searchable: false, sortable: false},
             ]
         });
 
@@ -106,9 +106,10 @@ List of Members
 
         $.get(url)
             .done((response) => {
-                $('#modal-form [name=nama]').val(response.nama);
-                $('#modal-form [name=telepon]').val(response.telepon);
-                $('#modal-form [name=alamat]').val(response.alamat);
+                console.log(response.name)
+                $('#modal-form [name=name]').val(response.name);
+                $('#modal-form [name=telephone]').val(response.telephone);
+                $('#modal-form [name=address]').val(response.address);
             })
             .fail((errors) => {
                 alert('Unable to display data');
@@ -132,7 +133,7 @@ List of Members
         }
     }
 
-    function cetakMember(url) {
+    function print_member(url) {
         if ($('input:checked').length < 1) {
             alert('Select the data to print');
             return;
